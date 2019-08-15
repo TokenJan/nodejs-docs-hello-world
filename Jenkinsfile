@@ -1,6 +1,15 @@
 pipeline {
     agent any
     stages {
+        stage('checkout') {
+            steps {
+                checkout ( [$class: 'GitSCM',
+                branches: [[name: '${BRANCH}' ]],
+                userRemoteConfigs: [[
+                credentialsId: '5c73d461-8fee-4434-9f63-26e45e845e69', 
+                url: '${URL}']]])
+            }
+        }
         stage('build') {
             steps {
                 echo 'build'
