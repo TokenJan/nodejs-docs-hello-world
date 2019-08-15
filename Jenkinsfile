@@ -28,5 +28,15 @@ pipeline {
                 sh 'docker run --name helloworld -p 1337:1337 helloworld:$(git log -1 --format=%h) node /var/www/index.js &'
             }
         }
+        stage('deploy qa approval') {
+            steps {
+                input 'Deploy to QA?'
+            }
+        }
+        stage('qa') {
+            steps {
+                echo 'deploy to qa env'
+            }
+        }
     }
 }
