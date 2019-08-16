@@ -3,7 +3,7 @@ node {
          parameters([
              gitParameter(branch: '',
                           branchFilter: 'origin/(.*)',
-                          defaultValue: 'master',
+                          defaultValue: 'release-0.0.1',
                           description: '',
                           name: 'BRANCH',
                           quickFilterEnabled: false,
@@ -13,13 +13,6 @@ node {
                           type: 'PT_BRANCH')
          ])
      ])
-    stage('checkout') {
-        checkout ( [$class: 'GitSCM',
-        branches: [[name: '${BRANCH}' ]],
-        userRemoteConfigs: [[
-        credentialsId: '5c73d461-8fee-4434-9f63-26e45e845e69', 
-        url: '${URL}']]])    
-    }
     stage('build') {
         echo 'build'
         sh 'docker build --tag helloworld:$(git log -1 --format=%h) .'
