@@ -2,7 +2,7 @@ properties([
     parameters([
         gitParameter(branch: '',
                      branchFilter: 'origin/(release-.*)',
-                     defaultValue: 'release-0.0.1',
+                     defaultValue: 'release-0.0.2',
                      description: '',
                      name: 'BRANCH',
                      quickFilterEnabled: false,
