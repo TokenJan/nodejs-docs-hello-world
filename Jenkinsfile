@@ -1,18 +1,22 @@
+properties([
+    parameters([
+        gitParameter(branch: '',
+                     branchFilter: 'origin/(.*)',
+                     defaultValue: 'release-0.0.1',
+                     description: '',
+                     name: 'BRANCH',
+                     quickFilterEnabled: false,
+                     selectedValue: 'NONE',
+                     sortMode: 'NONE',
+                     tagFilter: '*',
+                     type: 'PT_BRANCH')
+    ])
+])
+
 node {
-     properties([
-         parameters([
-             gitParameter(branch: '',
-                          branchFilter: 'origin/(.*)',
-                          defaultValue: 'release-0.0.1',
-                          description: '',
-                          name: 'BRANCH',
-                          quickFilterEnabled: false,
-                          selectedValue: 'NONE',
-                          sortMode: 'NONE',
-                          tagFilter: '*',
-                          type: 'PT_BRANCH')
-         ])
-     ])
+    stage('checkout') {
+        git branch: "${params.BRANCH}", url: 'https://github.com/TokenJan/nodejs-docs-hello-world.git'
+    }
     stage('build') {
         echo 'build'
         sh 'docker build --tag helloworld:$(git log -1 --format=%h) .'
