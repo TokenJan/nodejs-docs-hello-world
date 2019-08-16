@@ -1,10 +1,18 @@
 node {
      properties([
-                parameters([
-                        string(name: 'URL', defaultValue: 'https://github.com/TokenJan/nodejs-docs-hello-world.git'),
-                        string(name: 'BRANCH', defaultValue: 'release-0.0.1'),
-                ])
-        ])
+         parameters([
+             gitParameter(branch: '',
+                          branchFilter: 'origin/(.*)',
+                          defaultValue: 'master',
+                          description: '',
+                          name: 'BRANCH',
+                          quickFilterEnabled: false,
+                          selectedValue: 'NONE',
+                          sortMode: 'NONE',
+                          tagFilter: '*',
+                          type: 'PT_BRANCH')
+         ])
+     ])
     stage('checkout') {
         checkout ( [$class: 'GitSCM',
         branches: [[name: '${BRANCH}' ]],
