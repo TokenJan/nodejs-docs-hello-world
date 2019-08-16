@@ -1,6 +1,6 @@
 FROM node:alpine
 
-EXPOSE 1337
+EXPOSE 1338
 
 WORKDIR /var/www
 COPY package.json /var/www/
