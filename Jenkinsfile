@@ -1,5 +1,5 @@
 node {
-    stage('qa') {
+    stage('deploy:qa') {
         steps {
             echo 'deploy to qa env'
             sh 'docker stop helloworld && docker rm helloworld'
