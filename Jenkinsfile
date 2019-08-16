@@ -3,7 +3,7 @@ node {
          parameters([
              gitParameter(branch: '',
                           branchFilter: 'origin/(.*)',
-                          defaultValue: 'release-0.0.1',
+                          defaultValue: 'master',
                           description: '',
                           name: 'BRANCH',
                           quickFilterEnabled: false,
