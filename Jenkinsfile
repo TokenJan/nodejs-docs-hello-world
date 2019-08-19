@@ -17,7 +17,7 @@ pipeline {
                 url: '${URL}']]])    
             }
         }
-        stage('pre-test') {
+        stage('pre-build') {
             parallel {
                 stage('style check') {
                     steps {
