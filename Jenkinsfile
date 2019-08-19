@@ -13,12 +13,21 @@ node {
         credentialsId: '5c73d461-8fee-4434-9f63-26e45e845e69', 
         url: '${URL}']]])    
     }
+    stage('style check') {
+        echo 'style check'
+    }
+     stage('find bugs') {
+        echo 'find bugs'
+    }
+    stage('unit test') {
+        echo 'unit test'
+    }
     stage('build') {
         echo 'build'
         sh 'docker build --tag helloworld:$(git log -1 --format=%h) .'
     }
-    stage('unit test') {
-        echo 'unit test'
+    stage('publish') {
+        echo 'push to docker registry'
     }
     stage('deploy:dev') {
         echo 'deploy to dev env'
