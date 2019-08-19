@@ -28,5 +28,10 @@ pipeline {
                 sh 'docker run --name helloworld-staging -p 1338:1338 helloworld:$(git log -1 --format=%h) node /var/www/index.js &'
             }
         }
+        state('publish') {
+            steps {
+                echo 'push to docker registry'
+            }
+        }
     }
 }
