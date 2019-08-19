@@ -11,10 +11,4 @@ node {
         sh 'docker stop helloworld-staging && docker rm helloworld-staging'
         sh 'docker run --name helloworld-staging -p 1338:1338 helloworld:$(git log -1 --format=%h) node /var/www/index.js &'
     }
-    stage('smoke test') {
-        echo 'smoke test'
-    }
-    stage('full regression test') {
-        echo 'full regression test'
-    }
 }
