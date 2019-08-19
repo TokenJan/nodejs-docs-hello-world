@@ -30,8 +30,20 @@ node {
         echo 'push to docker registry'
     }
     stage('deploy:dev') {
-        echo 'deploy to dev env'
-        sh 'docker stop helloworld && docker rm helloworld'
-        sh 'docker run --name helloworld -p 1337:1337 helloworld:$(git log -1 --format=%h) node /var/www/index.js &'
+        parallel 'deploy': {
+            stage('deploy') {
+                echo 'deploy to dev env'
+                sh 'docker stop helloworld && docker rm helloworld'
+                sh 'docker run --name helloworld -p 1337:1337 helloworld:$(git log -1 --format=%h) node /var/www/index.js &'
+            }
+        }, 'Contract Test': {
+                stage('contract test') {
+                       echo 'contract test'
+                }
+        }, 'SonarQube': {
+                stage('sonarqube scanning') {
+                       echo 'sonarqube scanning'
+                }
+        }     
     }
 }
