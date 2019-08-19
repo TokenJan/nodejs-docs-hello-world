@@ -17,21 +17,26 @@ pipeline {
                 url: '${URL}']]])    
             }
         }
-        stage('style check') {
-            steps {
-                echo 'style check'
+        stage('pre-test') {
+            parallel {
+                stage('style check') {
+                    steps {
+                        echo 'style check'
+                    }
+                }
+                stage('find bugs') {
+                    steps {
+                        echo 'find bugs'
+                    }
+                }
+                stage('unit test') {
+                    steps {
+                        echo 'unit test'
+                    }
+                }
             }
         }
-        stage('find bugs') {
-            steps {
-                echo 'find bugs'
-            }
-        }
-        stage('unit test') {
-            steps {
-                echo 'unit test'
-            }
-        }
+
         stage('build') {
             steps {
                 echo 'build'
