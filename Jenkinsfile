@@ -1,21 +1,6 @@
-properties([
-    parameters([
-        gitParameter(branch: '',
-                     branchFilter: 'origin/(release-.*)',
-                     defaultValue: 'release-0.0.2',
-                     description: '',
-                     name: 'BRANCH',
-                     quickFilterEnabled: false,
-                     selectedValue: 'NONE',
-                     sortMode: 'NONE',
-                     tagFilter: '*',
-                     type: 'PT_BRANCH')
-    ])
-])
-
 node {
     stage('checkout') {
-        git branch: "${params.BRANCH}", url: 'https://github.com/TokenJan/nodejs-docs-hello-world.git'
+        git branch: "release-0.0.2", url: 'https://github.com/TokenJan/nodejs-docs-hello-world.git'
     }
     stage('build') {
         echo 'build'
