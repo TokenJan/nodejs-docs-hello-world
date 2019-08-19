@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('checkout') {
-            steps {
-                git branch: "release-0.0.1", url: 'https://github.com/TokenJan/nodejs-docs-hello-world.git'
-            }
-        }
         stage('build') {
             steps {
                 echo 'build'
