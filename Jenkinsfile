@@ -24,6 +24,11 @@ pipeline {
                         echo 'style check'
                     }
                 }
+                stage('TSLint') {
+                    steps {
+                        echo 'TSLint'
+                    }
+                }
                 stage('find bugs') {
                     steps {
                         echo 'find bugs'
