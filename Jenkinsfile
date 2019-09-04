@@ -50,7 +50,7 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                SEMVER = $(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer)
+                SEMVER = sh(returnStdout: true, script: 'docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer')
                 sh 'docker build --tag helloworld:${SEMVER} .'
             }
         }
