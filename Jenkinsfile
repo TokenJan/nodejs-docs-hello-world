@@ -45,8 +45,8 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                export GITVERSION="gittools/gitversion:5.0.0-linux-debian-9-netcoreapp2.2"
-                export SEMVER=$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer)
+                sh 'export GITVERSION="gittools/gitversion:5.0.0-linux-debian-9-netcoreapp2.2"'
+                sh 'export SEMVER=$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer)'
                 sh 'docker build --tag helloworld:${SEMVER} .'
             }
         }
