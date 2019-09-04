@@ -45,7 +45,9 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                sh 'docker build --tag helloworld:$(git log -1 --format=%h) .'
+                export GITVERSION="gittools/gitversion:5.0.0-linux-debian-9-netcoreapp2.2"
+                export SEMVER=$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer)
+                sh 'docker build --tag helloworld:${SEMVER} .'
             }
         }
         stage('publish') {
@@ -59,7 +61,7 @@ pipeline {
                     steps {
                         echo 'deploy to dev env'
                         sh 'docker stop helloworld && docker rm helloworld'
-                        sh 'docker run --name helloworld -p 1337:1337 helloworld:$(git log -1 --format=%h) node /var/www/index.js &'
+                        sh 'docker run --name helloworld -p 1337:1337 helloworld:${SEMVER} node /var/www/index.js &'
                     }
                 }
                 stage('contract test') {
