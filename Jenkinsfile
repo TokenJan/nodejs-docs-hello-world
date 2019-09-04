@@ -20,7 +20,7 @@ pipeline {
                 userRemoteConfigs: [[
                 credentialsId: '5c73d461-8fee-4434-9f63-26e45e845e69', 
                 url: '${URL}']]]) 
-                scripts {
+                script {
                       SEMVER = sh(returnStdout: true, script: 'docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer')
                 }
             }
