@@ -19,7 +19,10 @@ pipeline {
                 branches: [[name: '${BRANCH}' ]],
                 userRemoteConfigs: [[
                 credentialsId: '5c73d461-8fee-4434-9f63-26e45e845e69', 
-                url: '${URL}']]])    
+                url: '${URL}']]]) 
+                scripts {
+                      SEMVER = sh(returnStdout: true, script: 'docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer')
+                }
             }
         }
         stage('pre-build') {
@@ -50,7 +53,6 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                SEMVER = sh(returnStdout: true, script: 'docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer')
                 sh 'docker build --tag helloworld:${SEMVER} .'
             }
         }
