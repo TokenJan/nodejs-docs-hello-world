@@ -56,7 +56,8 @@ pipeline {
         }
         stage('publish') {
             steps {
-                echo 'push to docker registry'
+                sh 'docker login -u $ACR_USER -p $ACR_PASSWORD $ACR_LOGINSERVER'
+                sh 'docker push helloworld:$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer)'
             }
         }
         stage('deploy:dev') {
