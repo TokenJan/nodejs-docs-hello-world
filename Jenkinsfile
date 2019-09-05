@@ -5,8 +5,6 @@ properties([
            ])
 ])
 
-def SEMVER = ''
-
 pipeline {
     agent any
     environment {
@@ -53,7 +51,7 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                sh 'docker build --tag helloworld:${SEMVER} .'
+                sh 'docker build --tag helloworld:$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer) .'
             }
         }
         stage('publish') {
@@ -67,7 +65,7 @@ pipeline {
                     steps {
                         echo 'deploy to dev env'
                         sh 'docker stop helloworld && docker rm helloworld'
-                        sh 'docker run --name helloworld -p 1337:1337 helloworld:${SEMVER} node /var/www/index.js &'
+                        sh 'docker run --name helloworld -p 1337:1337 helloworld:$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer) node /var/www/index.js &'
                     }
                 }
                 stage('contract test') {
