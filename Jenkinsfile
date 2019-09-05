@@ -51,7 +51,7 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                sh 'docker build --tag helloworld:$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer) .'
+                sh 'docker build --tag ${ACR_LOGINSERVER}/helloworld:$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer) .'
             }
         }
         stage('publish') {
@@ -65,8 +65,6 @@ pipeline {
                 stage('deploy') {
                     steps {
                         echo 'deploy to dev env'
-                        sh 'docker stop helloworld && docker rm helloworld'
-                        sh 'docker run --name helloworld -p 1337:1337 helloworld:$(docker run --rm --volume "$(pwd):/repo" $GITVERSION /repo -output json -showvariable FullSemVer) node /var/www/index.js &'
                     }
                 }
                 stage('contract test') {
